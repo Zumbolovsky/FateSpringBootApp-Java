@@ -1,16 +1,19 @@
 spring:
   datasource:
     initialization-mode: always
-    url: jdbc:postgresql://172.23.0.3:5432/fate
-    username: root
+    url: jdbc:postgresql://127.0.0.1:5432/postgres
+    username: postgres
     password: root
     driverClassName: org.postgresql.Driver
+    platform: postgresql
 
   jpa:
     properties:
       hibernate:
-        hbm2ddl:
-          auto: create
+        default_schema: fate
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQL91Dialect
     show-sql: true
 

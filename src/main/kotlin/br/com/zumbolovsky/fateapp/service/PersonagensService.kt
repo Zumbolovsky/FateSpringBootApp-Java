@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
 @Service
-class PersonagensService(@Autowired private val personagensRepository: PersonagensRepository) {
+class PersonagensService(@Autowired var personagensRepository: PersonagensRepository) {
 
     @Transactional
     fun insert(personagens: Personagens) {

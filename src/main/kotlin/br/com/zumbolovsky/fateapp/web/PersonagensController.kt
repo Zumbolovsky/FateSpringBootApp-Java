@@ -2,6 +2,7 @@ package br.com.zumbolovsky.fateapp.web
 
 import br.com.zumbolovsky.fateapp.domain.Personagens
 import br.com.zumbolovsky.fateapp.service.PersonagensService
+import br.com.zumbolovsky.fateapp.web.PersonagensVO
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class PersonagensController(@Autowired private val personagensService: PersonagensService) {
+class PersonagensController(@Autowired var personagensService: PersonagensService) {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(value = ["/personagens"], consumes = [MediaType.APPLICATION_JSON_VALUE])

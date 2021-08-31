@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.web
+package br.com.zumbolovsky.fateapp
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
