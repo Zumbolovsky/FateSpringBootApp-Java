@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: fate
+
   datasource:
     initialization-mode: always
     url: jdbc:postgresql://127.0.0.1:5432/postgres
@@ -21,3 +24,6 @@ server:
   port: 8080
   servlet:
     context-path: /fate
+
+springdoc:
+  packagesToScan: br.com.zumbolovsky.fateapp

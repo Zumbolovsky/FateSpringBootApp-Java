@@ -3,9 +3,13 @@ package br.com.zumbolovsky.fateapp
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
 @EnableAutoConfiguration
+@ComponentScan(basePackages = [
+    "br.com.zumbolovsky.fateapp"
+])
 class FateAppApplication {
 
     companion object {
