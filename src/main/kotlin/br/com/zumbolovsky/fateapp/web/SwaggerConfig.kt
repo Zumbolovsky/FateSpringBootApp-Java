@@ -24,5 +24,4 @@ class SwaggerConfig {
                     .contact(
                         Contact().name("Andrew Siquieri")))
     }
-
 }

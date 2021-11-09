@@ -1,5 +1,6 @@
 package br.com.zumbolovsky.fateapp
 
+import br.com.zumbolovsky.fateapp.domain.TestEnum
 import org.springframework.stereotype.Component
 
 @Component

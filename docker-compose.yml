@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  postgresql:
+    container_name: postgresql
+    image: 'bitnami/postgresql:latest'
+    hostname: "testname"
+    environment:
+      POSTGRESQL_USERNAME: root
+      POSTGRESQL_PASSWORD: root
+    ports:
+      - '5432:5432'
+
+  pgadmin:
+    container_name: pgadmin
+    image: 'dpage/pgadmin4:latest'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - '5050:80'
+
+  fate-spring-boot-app:
+    container_name: fate-spring-boot-app
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://testname:5432/postgres
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgresql
+    command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
