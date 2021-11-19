@@ -3,7 +3,7 @@ services:
   postgresql:
     container_name: postgresql
     image: 'bitnami/postgresql:latest'
-    hostname: "testname"
+    hostname: "postgresqlhostname"
     environment:
       POSTGRESQL_USERNAME: root
       POSTGRESQL_PASSWORD: root
@@ -19,6 +19,15 @@ services:
     ports:
       - '5050:80'
 
+  mongodb:
+    container_name: mongodb
+    image: 'bitnami/mongodb:latest'
+    hostname: "mongodbhostname"
+    environment:
+      MONGODB_USERNAME: root
+      MONGODB_PASSWORD: root
+      MONGODB_DATABASE: fate
+
   fate-spring-boot-app:
     container_name: fate-spring-boot-app
     build:
@@ -27,7 +36,7 @@ services:
       - "8000:8000"
       - "8080:8080"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://testname:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
     volumes:
       - ./:/app
     depends_on:

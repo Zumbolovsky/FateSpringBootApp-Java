@@ -20,6 +20,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL91Dialect
     show-sql: true
 
+mongodb:
+  connection: mongodb://root:root@mongodbhostname:27017
+  database: fate
+
 server:
   port: 8080
   servlet:
