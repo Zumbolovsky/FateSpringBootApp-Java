@@ -27,6 +27,8 @@ services:
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: root
       MONGODB_DATABASE: fate
+      MONGODB_ROOT_USERNAME: root
+      MONGODB_ROOT_PASSWORD: root
 
   fate-spring-boot-app:
     container_name: fate-spring-boot-app
