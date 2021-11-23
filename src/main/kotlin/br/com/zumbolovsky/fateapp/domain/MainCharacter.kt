@@ -5,10 +5,10 @@ import org.litote.kmongo.Id
 import org.litote.kmongo.newId
 import java.math.BigInteger
 
-class MainCharacter(
+data class MainCharacter(
     val name: String,
     val level: Short,
     val saintQuartz: Long,
     val qp: BigInteger) {
-    @BsonId val key: Id<MainCharacter> = newId()
+    @BsonId private val key: Id<MainCharacter> = newId()
 }
