@@ -14,6 +14,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fate-app</name>
 	<description>Teste de aplicação com personagens do Fate</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>11</java.version>
