@@ -32,8 +32,8 @@ services:
     ports:
       - "27017:27017"
 
-  fate-spring-boot-app:
-    container_name: fate-spring-boot-app
+  fate-spring-boot-app_develop:
+    container_name: fate-spring-boot-app_develop
     build:
       context: .
       dockerfile: DevelopDockerfile
@@ -49,3 +49,18 @@ services:
       - postgresql
       - mongodb
     command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
+
+  fate-spring-boot-app_deploy:
+    container_name: fate-spring-boot-app_deploy
+    build:
+      context: .
+      dockerfile: DeployDockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
+      - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
+    depends_on:
+      - postgresql
+      - mongodb
+    command: java -jar fate-app-0.0.1-SNAPSHOT.jar -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
