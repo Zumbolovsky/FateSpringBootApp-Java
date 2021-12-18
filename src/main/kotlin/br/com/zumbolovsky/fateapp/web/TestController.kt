@@ -20,61 +20,38 @@ class TestController {
 
     @GetMapping("/test")
     @Operation(summary = "Test")
-    fun test(): String {
-        return "Hello World"
-    }
+    fun test(): String = "Hello World"
 
-    @GetMapping("/test-executor-service")
+    @GetMapping("/executor/service/test")
     @Operation(summary = "Test of executor service")
     fun testExecutorService(): String {
         val executorService = Executors.newFixedThreadPool(4)
         val listOf: List<Callable<Int>> = listOf(
-            Callable {
-                throw RuntimeException()
-            },
-            Callable {
-                return@Callable 9
-            },
-            Callable {
-                return@Callable 8
-            },
-            Callable {
-                return@Callable 7
-            },
-            Callable {
-                return@Callable 6
-            },
-            Callable {
-                return@Callable 5
-            },
-            Callable {
-                return@Callable 4
-            },
-            Callable {
-                return@Callable 3
-            },
-            Callable {
-                return@Callable 2
-            },
-            Callable {
-                return@Callable 1
-            })
+            Callable { throw RuntimeException() },
+            Callable { 9 },
+            Callable { 8 },
+            Callable { 7 },
+            Callable { 6 },
+            Callable { 5 },
+            Callable { 4 },
+            Callable { 3 },
+            Callable { 2 },
+            Callable { 1 })
         try {
             val futures = executorService.invokeAll(listOf)
-            while (!futures.stream()
-                    .allMatch { obj: Future<Int> -> obj.isDone }) {
+            while (!futures.stream().allMatch { obj -> obj.isDone }) {
                 Thread.sleep(1000)
             }
             executorService.shutdown()
             return futures.stream()
                 .map {
                     try {
-                        return@map it.get().toString()
+                        it.get().toString()
                     } catch (e: InterruptedException) {
                         Thread.currentThread().interrupt()
-                        return@map "F1"
+                        "F1"
                     } catch (e: ExecutionException) {
-                        return@map "F2"
+                        "F2"
                     }
                 }.collect(Collectors.joining(","))
         } catch (e: InterruptedException) {
@@ -83,8 +60,22 @@ class TestController {
         }
     }
 
-    @PostMapping("/test-mongo")
+    @PostMapping("/mongo/test")
     @Operation(summary = "Testing mongo")
-    fun insertMongo(): MainCharacter =
-        mongoService.createMC()
+    fun insertMongo(): MainCharacter = mongoService.createMC()
+
+    @GetMapping("/timeout/aspect/test")
+    @Operation(summary = "Testing aspect implemented timeout")
+    @Timeout
+    fun aspectTimeoutTest(): String = timeoutTest()
+
+    //Inconsistent with close timeout and execution durations
+    @GetMapping("/timeout/spring/test")
+    @Operation(summary = "Testing spring default implementation timeout")
+    fun springTimeoutTest(): Callable<String> = Callable(::timeoutTest)
+
+    private fun timeoutTest(): String {
+        Thread.sleep(5500)
+        return "Hello World"
+    }
 }

@@ -20,6 +20,10 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL91Dialect
     show-sql: true
 
+  mvc:
+    async:
+      request-timeout: 5000
+
 mongodb:
   connection: mongodb://root:root@localhost:27017
   database: fate
