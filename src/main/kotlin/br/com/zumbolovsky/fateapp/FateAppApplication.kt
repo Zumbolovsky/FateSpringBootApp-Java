@@ -9,9 +9,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 @SpringBootApplication
 @EnableAspectJAutoProxy
 @EnableAutoConfiguration
-@ComponentScan(basePackages = [
-    "br.com.zumbolovsky.fateapp"
-])
+@ComponentScan(basePackages = ["br.com.zumbolovsky.fateapp"])
 class FateAppApplication {
 
     companion object {

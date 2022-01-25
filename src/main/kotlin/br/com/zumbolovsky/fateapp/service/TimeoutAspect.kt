@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.web
+package br.com.zumbolovsky.fateapp.service
 
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException
 @Component
 class TimeoutAspect {
 
-    @Around("@annotation(br.com.zumbolovsky.fateapp.web.Timeout) && @annotation(timeout)")
+    @Around("@annotation(br.com.zumbolovsky.fateapp.service.Timeout) && @annotation(timeout)")
     fun around(pjp: ProceedingJoinPoint, timeout: Timeout): Any {
         val executor = Executors.newSingleThreadExecutor()
         val future: Future<Any> = executor.submit<Any> { pjp.proceed() as String }

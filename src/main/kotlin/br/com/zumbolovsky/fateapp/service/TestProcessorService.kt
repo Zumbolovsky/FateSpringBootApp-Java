@@ -1,6 +1,5 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
-import br.com.zumbolovsky.fateapp.domain.TestEnum
 import org.springframework.plugin.core.Plugin
 import org.springframework.stereotype.Component
 

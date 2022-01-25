@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
 import java.util.function.BinaryOperator
 
@@ -8,7 +8,7 @@ class KotlinFunctionService {
 
         @JvmStatic
         fun main(vararg: Array<String>) {
-            println(functionTestMethod({a, b -> a.plus(b)}, "Olá", "Mundo!"))
+            println(functionTestMethod({ a, b -> a.plus(b)}, "Olá", "Mundo!"))
             val function: BinaryOperator<String> =
                 BinaryOperator<String> { a, b ->
                     if (b.length > 1) {

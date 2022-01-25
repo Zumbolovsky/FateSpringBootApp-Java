@@ -1,6 +1,6 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
-import br.com.zumbolovsky.fateapp.domain.MainCharacter
+import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
 import com.mongodb.client.MongoDatabase
 import org.litote.kmongo.exists
 import org.litote.kmongo.getCollection

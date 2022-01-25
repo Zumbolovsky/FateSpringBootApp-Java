@@ -1,7 +1,8 @@
 package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.MongoService
-import br.com.zumbolovsky.fateapp.domain.MainCharacter
+import br.com.zumbolovsky.fateapp.service.MongoService
+import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
+import br.com.zumbolovsky.fateapp.service.Timeout
 import io.swagger.v3.oas.annotations.Operation
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutionException
 import java.util.concurrent.Executors
-import java.util.concurrent.Future
 import java.util.stream.Collectors
 
 @RestController
