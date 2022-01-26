@@ -6,6 +6,9 @@ In this repo, there are the following branches and their use:
 - `/master`: for kotlin general development;
 - `/feature/java`: for java general development;
 - `/feature/mockito-junit5`: for examples and explanation unit testing feat. JUnit5 and Mockito.
+- `/feature/jackson-yml`: for example of reading YAML files using Jackson dependency;
+- `/feature/bouncycastle-rsa-signature`: for example of RSA key pair generation and signature using BouncyCastle dependency; 
+- `/feature/jwt`: for example of authentication in REST API using JWT in Spring Boot; 
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 
@@ -18,6 +21,7 @@ preferred command terminal application and execute the following commands:
 
 ```shell
 docker-compose up postgresql
+docker-compose up mongodb
 docker-compose up fate-spring-boot-app
 ```
 
