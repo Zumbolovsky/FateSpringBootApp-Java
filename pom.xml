@@ -108,7 +108,6 @@
 			<version>0.11.2</version>
 		</dependency>
 
-
 		<!-- Springdoc (OpenAPI) -->
 		<dependency>
 			<groupId>org.springdoc</groupId>

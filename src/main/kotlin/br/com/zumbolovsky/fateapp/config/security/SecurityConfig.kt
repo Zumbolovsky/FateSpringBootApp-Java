@@ -1,9 +1,7 @@
 package br.com.zumbolovsky.fateapp.config.security
 
 import br.com.zumbolovsky.fateapp.service.UserService
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Primary
 import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -16,7 +14,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
-
 @EnableWebSecurity
 class SecurityConfig(
     private val userDetailsService: UserService,
@@ -24,7 +21,12 @@ class SecurityConfig(
 
     companion object SecurityConstants {
         const val SIGN_UP_URL = "/users"
-        const val SWAGGER_URL = ".*/(swagger-ui|swagger-config|api-docs).*"
+        val ALLOWED_URLS = arrayOf(
+            "/authenticate",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/webjars/**")
         const val KEY = "q3t6w9z\$C&F)J@NcQfTjWnZr4u7x!A%D*G-KaPdSgUkXp2s5v8y/B?E(H+MbQeTh"
         const val HEADER_NAME = "Authorization"
         const val EXPIRATION_TIME = 1000L * 60 * 30
@@ -34,7 +36,7 @@ class SecurityConfig(
     override fun configure(http: HttpSecurity) {
         http.cors().and().csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
-            .regexMatchers(SWAGGER_URL).permitAll()
+            .antMatchers(*ALLOWED_URLS).permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(AuthenticationFilter(authenticationManager()))
