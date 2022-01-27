@@ -5,10 +5,11 @@ This is a base repository for my digital playground and future reference for dev
 In this repo, there are the following branches and their use:
 - `/master`: for kotlin general development;
 - `/feature/java`: for java general development;
-- `/feature/mockito-junit5`: for examples and explanation unit testing feat. JUnit5 and Mockito.
-- `/feature/jackson-yml`: for example of reading YAML files using Jackson dependency;
+- `/feature/mockito-junit5`: for examples and explanation about unit testing using JUnit5 and Mockito;
+- `/feature/jackson-yml`: for example of reading YAML files, and handling data using Jackson dependency;
+- `/feature/file-reading-writing`: for example of file reading and writing using Java NIO API;
 - `/feature/bouncycastle-rsa-signature`: for example of RSA key pair generation and signature using BouncyCastle dependency; 
-- `/feature/jwt`: for example of authentication in REST API using JWT in Spring Boot; 
+- `/feature/jwt`: for example of authentication in REST API using JWT, and Swagger, in Spring Boot; 
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 
