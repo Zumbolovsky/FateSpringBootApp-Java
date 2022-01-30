@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.web
+package br.com.zumbolovsky.fateapp.service
 
 @Retention
 @Target(AnnotationTarget.FUNCTION)

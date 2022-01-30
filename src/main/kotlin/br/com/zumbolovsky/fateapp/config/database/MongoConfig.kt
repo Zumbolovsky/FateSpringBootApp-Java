@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.web
+package br.com.zumbolovsky.fateapp.config.database
 
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoDatabase

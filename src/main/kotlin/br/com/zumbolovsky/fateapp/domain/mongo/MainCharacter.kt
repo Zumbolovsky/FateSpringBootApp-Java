@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.domain
+package br.com.zumbolovsky.fateapp.domain.mongo
 
 import org.bson.codecs.pojo.annotations.BsonId
 import org.litote.kmongo.Id

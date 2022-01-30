@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp.domain
+package br.com.zumbolovsky.fateapp.service
 
 enum class TestEnum {
     TEST_A,

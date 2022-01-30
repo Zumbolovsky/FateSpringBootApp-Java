@@ -1,5 +1,7 @@
 package br.com.zumbolovsky.fateapp
 
+import br.com.zumbolovsky.fateapp.service.KotlinAppService
+import br.com.zumbolovsky.fateapp.service.KotlinOtherService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

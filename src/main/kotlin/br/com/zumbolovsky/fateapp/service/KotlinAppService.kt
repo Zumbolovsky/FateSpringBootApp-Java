@@ -1,4 +1,4 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
