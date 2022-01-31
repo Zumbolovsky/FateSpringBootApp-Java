@@ -19,7 +19,6 @@ data class UserInfo(
     @Column(name = "USER_NAME", nullable = false)
     var user: String? = null,
 
-    @Email
     @Column(name = "EMAIL", nullable = false)
     var email: String? = null,
 

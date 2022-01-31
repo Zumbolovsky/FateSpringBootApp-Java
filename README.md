@@ -58,3 +58,67 @@ To create a config for remote debugging in IntelliJ use the following template i
 
 Using this configuration with the running docker-compose project application, once a file is altered, just right-click the
 file and select "Compile and reload file" from the context menu.
+
+## Liquibase configuration
+
+Liquibase is configured by default using the Spring Boot supported configuration via the `application.yml` file.
+The resources located in `db/changelog/{...}` and `db/db.changelog-master.yml` define the change sets and changelogs for the Liquibase database migration tool.
+Using this configuration, the changelog files would be declared manually with every new database relevant changes made (great for development purposes).
+
+In case of production ready applications, the recommended configuration for changelog generation is the use of the Liquibase maven plugin and properties 
+together with the creation of a `liquibase.properties` resource file into the `liquibase` directory.
+
+For this demonstration application, the following configurations were used:
+
+- Liquibase Maven Properties:
+```xml
+<properties>
+    <!-- Other properties... -->
+    <liquibase.version>4.7.1</liquibase.version>
+    <liquibase.propertyFile>src/main/resources/liquibase/liquibase.properties</liquibase.propertyFile>
+</properties>
+```
+- Liquibase Maven Plugin:
+```xml
+<plugins>
+    <!-- Other plugins... -->
+    <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>${liquibase.version}</version>
+        <configuration>
+            <!-- Use the liquibase.properties file as the main source of configuration -->
+            <propertyFileWillOverride>true</propertyFileWillOverride>
+            <propertyFile>${liquibase.propertyFile}</propertyFile>
+        </configuration>
+        <dependencies>
+            <!-- This ensures the required dependencies are available to the plugin in the classpath -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${project.parent.version}</version>
+            </dependency>
+        </dependencies>
+    </plugin>
+</plugins>
+```
+- Liquibase properties file:
+```properties
+url: jdbc:postgresql://localhost:5432/postgres?currentSchema=fate
+username: root
+password: root
+driver: org.postgresql.Driver
+
+changeLogFile: src/main/resources/liquibase/db.changelog-master.xml
+outputChangeLogFile: src/main/resources/liquibase/db.changelog-generated.xml
+
+# Optional
+verbose: true
+```
+
+Once the configuration is complete, just use the command `mvn liquibase:generateChangeLog` to generate the changelogs for the application.

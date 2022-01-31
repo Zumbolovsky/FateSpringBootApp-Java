@@ -13,6 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.servlet.LocaleResolver
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor
+import org.springframework.web.servlet.i18n.SessionLocaleResolver
+import java.util.*
+
 
 @EnableWebSecurity
 class SecurityConfig(
@@ -25,6 +30,7 @@ class SecurityConfig(
             "/authenticate",
             "/swagger-resources/**",
             "/swagger-ui/**",
+            "/swagger-ui.html",
             "/v3/api-docs/**",
             "/webjars/**")
         const val KEY = "q3t6w9z\$C&F)J@NcQfTjWnZr4u7x!A%D*G-KaPdSgUkXp2s5v8y/B?E(H+MbQeTh"
@@ -54,5 +60,19 @@ class SecurityConfig(
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService<UserDetailsService>(userDetailsService).passwordEncoder(bCryptPasswordEncoder)
+    }
+
+    @Bean
+    fun localeResolver(): LocaleResolver {
+        val slr = SessionLocaleResolver()
+        slr.setDefaultLocale(Locale.US)
+        return slr
+    }
+
+    @Bean
+    fun localeChangeInterceptor(): LocaleChangeInterceptor {
+        val lci = LocaleChangeInterceptor()
+        lci.paramName = "lang"
+        return lci
     }
 }

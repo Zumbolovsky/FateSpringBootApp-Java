@@ -1,0 +1,11 @@
+--liquibase formatted sql
+--changeset andrew.siquieri:1.0.0
+
+CREATE SCHEMA IF NOT EXISTS fate;
+
+CREATE TABLE FATE.USER_INFO (
+  ID        SERIAL       NOT NULL,
+  EMAIL     VARCHAR(255) NOT NULL,
+  PASSWORD  VARCHAR(255) NOT NULL,
+  USER_NAME VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ID));
