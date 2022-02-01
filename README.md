@@ -11,6 +11,7 @@ In this repo, there are the following branches and their use:
 - `/feature/bouncycastle-rsa-signature`: for example of RSA key pair generation and signature using BouncyCastle dependency;
 - `/feature/checksum-generation`: for example of checksum generation;
 - `/feature/jwt`: for example of authentication in REST API using JWT, and Swagger, in Spring Boot; 
+- `/feature/oauth2`: for example of authentication in REST API using OAuth2;
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 
