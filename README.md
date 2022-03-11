@@ -13,6 +13,7 @@ In this repo, there are the following branches and their use:
 - `/feature/jwt`: for example of authentication in REST API using JWT, and Swagger, in Spring Boot;
 - `/feature/jwt-without-websecurityconfigureradapter`: for example of authentication in REST API using JWT, and Swagger, in Spring Boot, without recently deprecated 'WebSecurityConfigurerAdapter';
 - `/feature/oauth2`: for example of authentication in REST API using OAuth2;
+- `/feature/testcontainers-and-it`: for example of integration tests and TestContainers configuration;
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 
