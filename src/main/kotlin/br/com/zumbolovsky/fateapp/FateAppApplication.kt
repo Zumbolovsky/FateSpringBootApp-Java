@@ -1,6 +1,5 @@
 package br.com.zumbolovsky.fateapp
 
-import br.com.zumbolovsky.fateapp.config.security.SecurityConfig.SecurityConstants.HEADER_NAME
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
@@ -13,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.EnableAspectJAutoProxy
+import org.springframework.http.HttpHeaders
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
@@ -26,7 +26,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
         license = License(name = "Apache 2.0", url = "https://www.apache.org/licenses/LICENSE-2.0"),
         contact = Contact(name = "Andrew Siquieri")))
 @SecurityScheme(
-    name = HEADER_NAME,
+    name = HttpHeaders.AUTHORIZATION,
     scheme = "basic",
     type = SecuritySchemeType.APIKEY,
     `in` = SecuritySchemeIn.HEADER,

@@ -1,11 +1,11 @@
 package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.config.security.SecurityConfig.SecurityConstants.HEADER_NAME
-import br.com.zumbolovsky.fateapp.service.MongoService
 import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
+import br.com.zumbolovsky.fateapp.service.MongoService
 import br.com.zumbolovsky.fateapp.service.Timeout
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
+import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 import java.util.stream.Collectors
 
 @RestController
-@SecurityRequirement(name = HEADER_NAME)
+@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 class TestController(
     private var mongoService: MongoService) {
 

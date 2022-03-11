@@ -11,9 +11,6 @@ spring:
     platform: postgresql
 
   jpa:
-    properties:
-      hibernate:
-        default_schema: fate
     database-platform: org.hibernate.dialect.PostgreSQL91Dialect
     show-sql: true
     open-in-view: false
@@ -22,7 +19,6 @@ spring:
     enabled: true
     drop-first: false
     change-log: classpath:db/db.changelog-master.yml
-    default-schema: fate
 
   mvc:
     async:
