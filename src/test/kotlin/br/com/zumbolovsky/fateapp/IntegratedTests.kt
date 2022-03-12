@@ -21,6 +21,8 @@ class IntegratedTests {
     @LocalServerPort
     protected var localPort: Int = 0
 
+    protected fun createEndpointUrl(endpoint: String) = "http://localhost:${localPort}/fate${endpoint}"
+
     companion object {
 
         @Container
@@ -37,7 +39,6 @@ class IntegratedTests {
             registry.add("spring.datasource.password", postgreSQLContainer::getPassword)
             registry.add("mongodb.connection", mongoDBContainer::getReplicaSetUrl)
             registry.add("mongodb.database") {"test"}
-            System.setProperty("sun.net.http.allowRestrictedHeaders", "true")
         }
     }
 }
