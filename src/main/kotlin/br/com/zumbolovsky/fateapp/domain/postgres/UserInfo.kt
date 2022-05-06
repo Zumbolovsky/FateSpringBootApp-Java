@@ -5,8 +5,10 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
 import javax.persistence.Table
-import javax.validation.constraints.Email
 
 @Entity
 @Table(name = "USER_INFO")
@@ -23,4 +25,11 @@ data class UserInfo(
     var email: String? = null,
 
     @Column(name = "PASSWORD", nullable = false)
-    var password: String? = null)
+    var password: String? = null,
+
+    @ManyToMany
+    @JoinTable(
+        name = "USERS_ROLES",
+        joinColumns = [JoinColumn(name = "USER_ID", referencedColumnName = "ID")],
+        inverseJoinColumns = [JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")])
+    var roles: Collection<Role>)
