@@ -10,11 +10,13 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.http.HttpHeaders
 
 @SpringBootApplication
+@EnableCaching
 @EnableAspectJAutoProxy
 @EnableAutoConfiguration
 @ComponentScan(basePackages = ["br.com.zumbolovsky.fateapp"])

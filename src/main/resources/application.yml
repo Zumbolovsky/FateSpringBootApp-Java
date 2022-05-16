@@ -27,6 +27,13 @@ spring:
   mustache:
     check-template-location: false
 
+  cache:
+    type: redis
+
+  redis:
+    host: localhost
+    port: 6379
+
 mongodb:
   connection: mongodb://root:root@localhost:27017
   database: fate

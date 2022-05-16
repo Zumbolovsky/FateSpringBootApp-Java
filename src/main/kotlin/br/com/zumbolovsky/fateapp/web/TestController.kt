@@ -1,13 +1,20 @@
 package br.com.zumbolovsky.fateapp.web
 
 import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
+import br.com.zumbolovsky.fateapp.domain.redis.Test
 import br.com.zumbolovsky.fateapp.service.MongoService
+import br.com.zumbolovsky.fateapp.service.RedisService
 import br.com.zumbolovsky.fateapp.service.Timeout
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutionException
@@ -17,7 +24,9 @@ import java.util.stream.Collectors
 @RestController
 @SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 class TestController(
-    private var mongoService: MongoService) {
+    private var mongoService: MongoService,
+    private var redisService: RedisService
+) {
 
     @GetMapping("/test")
     @Operation(summary = "Test")
@@ -79,4 +88,21 @@ class TestController(
         Thread.sleep(5500)
         return "Hello World"
     }
+
+    @GetMapping("/test/redis")
+    @Operation(summary = "Testing find all in Redis as database")
+    fun findAllRedis(): MutableIterable<Test> = redisService.findAll()
+
+    @GetMapping("/test/redis/{id}")
+    @Operation(summary = "Testing find by id in Redis as database")
+    fun findByIdRedis(@PathVariable("id") id: Int): Test = redisService.findById(id)
+
+    @PostMapping("/test/redis")
+    @Operation(summary = "Testing save in Redis as database")
+    @ResponseStatus(HttpStatus.CREATED)
+    fun saveRedis(@RequestBody test: Test): Test = redisService.save(test)
+
+    @DeleteMapping("/test/redis/{id}")
+    @Operation(summary = "Testing delete by id in Redis as database")
+    fun deleteByIdRedis(@PathVariable("id") id: Int) = redisService.deleteById(id)
 }
