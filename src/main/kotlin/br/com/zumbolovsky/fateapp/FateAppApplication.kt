@@ -13,10 +13,14 @@ import org.springframework.boot.runApplication
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.EnableAspectJAutoProxy
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories
 import org.springframework.http.HttpHeaders
 
 @SpringBootApplication
 @EnableCaching
+@EnableRedisRepositories(basePackages = ["br.com.zumbolovsky.fateapp.domain.redis"])
+@EnableJpaRepositories(basePackages = ["br.com.zumbolovsky.fateapp.domain.postgres"])
 @EnableAspectJAutoProxy
 @EnableAutoConfiguration
 @ComponentScan(basePackages = ["br.com.zumbolovsky.fateapp"])
