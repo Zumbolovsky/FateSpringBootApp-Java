@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  postgresql:
-    container_name: postgresql
+  fsba-postgresql:
+    container_name: fsba-postgresql
     image: 'bitnami/postgresql:latest'
     hostname: "postgresqlhostname"
     environment:
@@ -19,8 +19,8 @@ services:
     ports:
       - '5050:80'
 
-  mongodb:
-    container_name: mongodb
+  fsba-mongodb:
+    container_name: fsba-mongodb
     image: 'bitnami/mongodb:latest'
     hostname: "mongodbhostname"
     environment:
@@ -46,8 +46,8 @@ services:
     volumes:
       - ./:/app
     depends_on:
-      - postgresql
-      - mongodb
+      - fsba-postgresql
+      - fsba-mongodb
     command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
 
   fate-spring-boot-app_deploy:
@@ -61,6 +61,6 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
       - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
     depends_on:
-      - postgresql
-      - mongodb
+      - fsba-postgresql
+      - fsba-mongodb
     command: java -jar fate-app-0.0.1-SNAPSHOT.jar -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"

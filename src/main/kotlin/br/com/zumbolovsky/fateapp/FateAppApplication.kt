@@ -1,5 +1,6 @@
 package br.com.zumbolovsky.fateapp
 
+import br.com.zumbolovsky.fateapp.service.TestProcessorService
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
@@ -13,10 +14,11 @@ import org.springframework.boot.runApplication
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.http.HttpHeaders
+import org.springframework.plugin.core.config.EnablePluginRegistries
 
 @SpringBootApplication
+@EnablePluginRegistries(TestProcessorService::class)
 @EnableAspectJAutoProxy
-@EnableAutoConfiguration
 @ComponentScan(basePackages = ["br.com.zumbolovsky.fateapp"])
 @OpenAPIDefinition(
     info = Info(

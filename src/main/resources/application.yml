@@ -27,14 +27,19 @@ spring:
   mustache:
     check-template-location: false
 
-mongodb:
-  connection: mongodb://root:root@localhost:27017
-  database: fate
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017
+      database: fate
 
 server:
   port: 8080
   servlet:
     context-path: /fate
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
 
 springdoc:
   packagesToScan: br.com.zumbolovsky.fateapp
