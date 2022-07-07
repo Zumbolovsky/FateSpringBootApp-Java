@@ -1,5 +1,6 @@
 package br.com.zumbolovsky.fateapp.web
 
+import br.com.zumbolovsky.fateapp.config.error.APIResponse
 import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
 import br.com.zumbolovsky.fateapp.service.MongoService
 import io.swagger.v3.oas.annotations.Operation
@@ -15,6 +16,7 @@ class SecuredTestController(
 
     @PostMapping("/secured/mongo/test")
     @Operation(summary = "Testing mongo")
-    fun insertMongo(): MainCharacter = mongoService.createMC()
+    fun insertMongo(): APIResponse<MainCharacter> =
+        APIResponse(body = mongoService.createMC())
 
 }

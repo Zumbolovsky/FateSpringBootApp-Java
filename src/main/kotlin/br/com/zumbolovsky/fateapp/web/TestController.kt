@@ -1,5 +1,6 @@
 package br.com.zumbolovsky.fateapp.web
 
+import br.com.zumbolovsky.fateapp.config.error.APIResponse
 import br.com.zumbolovsky.fateapp.domain.redis.Test
 import br.com.zumbolovsky.fateapp.service.KotlinAppService
 import br.com.zumbolovsky.fateapp.service.RedisService
@@ -83,20 +84,24 @@ class TestController(
 
     @GetMapping("/plugin/test")
     @Operation(summary = "Testing spring plugin registry")
-    fun springPluginRegistryTest(): String = kotlinAppService.testPluginRegistry()
+    fun springPluginRegistryTest(): APIResponse<String> =
+        APIResponse(body = kotlinAppService.testPluginRegistry())
 
     @GetMapping("/test/redis")
     @Operation(summary = "Testing find all in Redis as database")
-    fun findAllRedis(): MutableIterable<Test> = redisService.findAll()
+    fun findAllRedis(): APIResponse<MutableIterable<Test>> =
+        APIResponse(body = redisService.findAll())
 
     @GetMapping("/test/redis/{id}")
     @Operation(summary = "Testing find by id in Redis as database")
-    fun findByIdRedis(@PathVariable("id") id: Int): Test = redisService.findById(id)
+    fun findByIdRedis(@PathVariable("id") id: Int): APIResponse<Test> =
+        APIResponse(body = redisService.findById(id))
 
     @PostMapping("/test/redis")
     @Operation(summary = "Testing save in Redis as database")
     @ResponseStatus(HttpStatus.CREATED)
-    fun saveRedis(@RequestBody test: Test): Test = redisService.save(test)
+    fun saveRedis(@RequestBody test: Test): APIResponse<Test> =
+        APIResponse(body = redisService.save(test))
 
     @DeleteMapping("/test/redis/{id}")
     @Operation(summary = "Testing delete by id in Redis as database")

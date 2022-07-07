@@ -18,7 +18,7 @@ class SecurityConfig(
     private val jwtTokenFilter: JwtTokenFilter) {
 
     companion object SecurityConstants {
-        const val SECURED_URLS = "/secure/**"
+        const val SECURED_URLS = "/secured/**"
         const val KEY = "q3t6w9z\$C&F)J@NcQfTjWnZr4u7x!A%D*G-KaPdSgUkXp2s5v8y/B?E(H+MbQeTh"
         const val ISSUER = "fateapp"
         const val EXPIRATION_TIME = 1000 * 60 * 30
