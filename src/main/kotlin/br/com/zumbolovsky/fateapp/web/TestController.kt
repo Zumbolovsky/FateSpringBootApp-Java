@@ -1,13 +1,9 @@
 package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
-import br.com.zumbolovsky.fateapp.service.MongoService
+import br.com.zumbolovsky.fateapp.service.KotlinAppService
 import br.com.zumbolovsky.fateapp.service.Timeout
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import org.springframework.http.HttpHeaders
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.Callable
 import java.util.concurrent.ExecutionException
@@ -15,9 +11,8 @@ import java.util.concurrent.Executors
 import java.util.stream.Collectors
 
 @RestController
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 class TestController(
-    private var mongoService: MongoService) {
+    private val kotlinAppService: KotlinAppService) {
 
     @GetMapping("/test")
     @Operation(summary = "Test")
@@ -61,10 +56,6 @@ class TestController(
         }
     }
 
-    @PostMapping("/mongo/test")
-    @Operation(summary = "Testing mongo")
-    fun insertMongo(): MainCharacter = mongoService.createMC()
-
     @GetMapping("/timeout/aspect/test")
     @Operation(summary = "Testing aspect implemented timeout")
     @Timeout
@@ -79,4 +70,8 @@ class TestController(
         Thread.sleep(5500)
         return "Hello World"
     }
+
+    @GetMapping("/plugin/test")
+    @Operation(summary = "Testing spring plugin registry")
+    fun springPluginRegistryTest(): String = kotlinAppService.testPluginRegistry()
 }

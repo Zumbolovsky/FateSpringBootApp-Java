@@ -36,10 +36,6 @@ server:
   port: 8080
   servlet:
     context-path: /fate
-  error:
-    include-message: always
-    include-binding-errors: always
-    include-exception: true
 
-springdoc:
+spring-doc:
   packagesToScan: br.com.zumbolovsky.fateapp

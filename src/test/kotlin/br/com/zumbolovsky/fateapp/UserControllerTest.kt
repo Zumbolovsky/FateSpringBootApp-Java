@@ -8,8 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 
-@PostgreSQL.Container
-@MongoDB.Container
 class UserControllerTest : EndToEndTests() {
 
     @ParameterizedTest
