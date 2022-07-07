@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.7</version>
+		<version>2.7.0</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
@@ -18,12 +18,12 @@
 
 	<properties>
 		<java.version>11</java.version>
-		<kotlin.version>1.6.10</kotlin.version>
+		<kotlin.version>1.7.0</kotlin.version>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<liquibase.version>4.8.0</liquibase.version>
-		<springdoc.version>1.6.6</springdoc.version>
-		<jsonwebtoken.version>0.11.2</jsonwebtoken.version>
+		<liquibase.version>4.11.0</liquibase.version>
+		<springdoc.version>1.6.9</springdoc.version>
+		<jsonwebtoken.version>0.11.5</jsonwebtoken.version>
 	</properties>
 
 	<dependencies>
@@ -108,7 +108,7 @@
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
-			<version>3.0.0</version>
+			<version>3.1.0</version>
 		</dependency>
 
 		<!-- jsonwebtoken -->
@@ -149,10 +149,11 @@
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-			<version>42.3.3</version>
+			<version>42.3.6</version>
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Liquibase -->
 		<dependency>
 			<groupId>org.liquibase</groupId>
 			<artifactId>liquibase-core</artifactId>
@@ -168,7 +169,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-kotlin</artifactId>
-			<version>2.13.1</version>
+			<version>2.13.3</version>
 		</dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -180,7 +181,7 @@
         <dependency>
             <groupId>org.litote.kmongo</groupId>
             <artifactId>kmongo</artifactId>
-            <version>4.4.0</version>
+            <version>4.5.1</version>
         </dependency>
 
 		<!-- Resilience4J -->
@@ -193,7 +194,7 @@
 		<!-- Kotlin Test -->
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-test</artifactId>
+            <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
         </dependency>
@@ -202,12 +203,6 @@
 			<artifactId>mockito-kotlin</artifactId>
 			<version>4.0.0</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>mockito-core</artifactId>
-					<groupId>org.mockito</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- JUnit -->
@@ -218,14 +213,46 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- Mockito -->
+		<!-- Testcontainers -->
 		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>4.2.0</version>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>testcontainers</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>annotations</artifactId>
+					<groupId>org.jetbrains</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>mongodb</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.testcontainers</groupId>
+			<artifactId>junit-jupiter</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.testcontainers</groupId>
+				<artifactId>testcontainers-bom</artifactId>
+				<version>1.17.2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

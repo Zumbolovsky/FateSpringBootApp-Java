@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration
 class MongoConfig {
 
     @Bean
-    fun mongoDB(@Value("\${mongodb.connection}") connectionString: String,
-                @Value("\${mongodb.database}") database: String): MongoDatabase =
-        KMongo.createClient(ConnectionString(connectionString)).getDatabase(database)
+    fun mongoDB(@Value("\${spring.data.mongodb.uri}") connectionString: String,
+                @Value("\${spring.data.mongodb.database}") database: String): MongoDatabase =
+        KMongo.createClient(ConnectionString(connectionString))
+            .getDatabase(database)
 }

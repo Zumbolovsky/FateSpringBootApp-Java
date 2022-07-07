@@ -1,14 +1,20 @@
 package br.com.zumbolovsky.fateapp.web
 
+import br.com.zumbolovsky.fateapp.domain.postgres.UserInfo
 import javax.validation.constraints.Email
-import javax.validation.constraints.NotNull
-
+import javax.validation.constraints.NotBlank
 
 data class UserVO(
-    @field:NotNull(message = "{user.name} {not.null}")
-    val user: String,
-    @field:NotNull(message = "{user.email} {not.null}")
+    @field:NotBlank(message = "{user.name} {not.blank}")
+    val user: String?,
+    @field:NotBlank(message = "{user.email} {not.blank}")
     @field:Email(message = "{user.email} {email.validation}")
-    val email: String,
-    @field:NotNull(message = "{user.password} {not.null}")
-    val password: String)
+    val email: String?,
+    @field:NotBlank(message = "{user.password} {not.blank}")
+    val password: String?) {
+    internal fun toUserInfo() =
+        UserInfo(
+            user = user,
+            email = email,
+            password = password)
+}

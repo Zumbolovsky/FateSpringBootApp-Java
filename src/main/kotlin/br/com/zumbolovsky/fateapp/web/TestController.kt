@@ -1,13 +1,10 @@
 package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.domain.mongo.MainCharacter
 import br.com.zumbolovsky.fateapp.domain.redis.Test
-import br.com.zumbolovsky.fateapp.service.MongoService
+import br.com.zumbolovsky.fateapp.service.KotlinAppService
 import br.com.zumbolovsky.fateapp.service.RedisService
 import br.com.zumbolovsky.fateapp.service.Timeout
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.security.SecurityRequirement
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -22,9 +19,8 @@ import java.util.concurrent.Executors
 import java.util.stream.Collectors
 
 @RestController
-@SecurityRequirement(name = HttpHeaders.AUTHORIZATION)
 class TestController(
-    private var mongoService: MongoService,
+    private val kotlinAppService: KotlinAppService,
     private var redisService: RedisService
 ) {
 
@@ -70,10 +66,6 @@ class TestController(
         }
     }
 
-    @PostMapping("/mongo/test")
-    @Operation(summary = "Testing mongo")
-    fun insertMongo(): MainCharacter = mongoService.createMC()
-
     @GetMapping("/timeout/aspect/test")
     @Operation(summary = "Testing aspect implemented timeout")
     @Timeout
@@ -88,6 +80,10 @@ class TestController(
         Thread.sleep(5500)
         return "Hello World"
     }
+
+    @GetMapping("/plugin/test")
+    @Operation(summary = "Testing spring plugin registry")
+    fun springPluginRegistryTest(): String = kotlinAppService.testPluginRegistry()
 
     @GetMapping("/test/redis")
     @Operation(summary = "Testing find all in Redis as database")

@@ -34,14 +34,15 @@ spring:
     host: localhost
     port: 6379
 
-mongodb:
-  connection: mongodb://root:root@localhost:27017
-  database: fate
+  data:
+    mongodb:
+      uri: mongodb://root:root@localhost:27017
+      database: fate
 
 server:
   port: 8080
   servlet:
     context-path: /fate
 
-springdoc:
+spring-doc:
   packagesToScan: br.com.zumbolovsky.fateapp

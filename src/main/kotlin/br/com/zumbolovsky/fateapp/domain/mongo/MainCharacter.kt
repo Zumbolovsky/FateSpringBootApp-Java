@@ -6,9 +6,8 @@ import org.litote.kmongo.newId
 import java.math.BigInteger
 
 data class MainCharacter(
+    @BsonId val key: Id<MainCharacter> = newId(),
     val name: String,
     val level: Short,
     val saintQuartz: Long,
-    val qp: BigInteger) {
-    @BsonId private val key: Id<MainCharacter> = newId()
-}
+    val qp: BigInteger)
