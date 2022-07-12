@@ -3,7 +3,7 @@
 This is a base repository for my digital playground and future reference for development.
 
 In this repo, there are the following branches and their use:
-- `/master`: for kotlin general development;
+- `/main`: for kotlin general development (all features that constitute improvements to the project usable stack are merged here);
 - `/feature/java`: for java general development;
 - `/feature/mockito-junit5`: for examples and explanation about unit testing using JUnit5 and Mockito;
 - `/feature/jackson-yml`: for example of reading YAML files, and handling data using Jackson dependency;
@@ -14,6 +14,7 @@ In this repo, there are the following branches and their use:
 - `/feature/jwt-without-websecurityconfigureradapter`: for example of authentication in REST API using JWT, and Swagger, in Spring Boot, without recently deprecated 'WebSecurityConfigurerAdapter';
 - `/feature/oauth2`: for example of authentication in REST API using OAuth2;
 - `/feature/testcontainers-and-it`: for example of integration tests and TestContainers configuration;
+- `/feature/redis`: for example of Redis cache and database functionality and configuration;
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 
@@ -25,13 +26,11 @@ To run the application, simply access the directory that contains the `docker-co
 preferred command terminal application and execute the following commands:
 
 ```shell
-docker-compose up fsba-redis
-docker-compose up fsba-postgresql
-docker-compose up fsba-mongodb
 docker-compose up fate-spring-boot-app_deploy
 ```
 
-These commands will create and run the dependant services along with the actual project application.
+This command will create and run the dependant services along with the actual project application. 
+The current list of dependant services is Redis, PostgreSQL and MongoDB. 
 
 In addition, for ease of use, another service is present in the `docker-compose.yml` file: 
 a pgadmin service, used for database navigation. 
