@@ -9,5 +9,6 @@ internal class ContainersInitializer : ApplicationContextInitializer<Configurabl
         // Initialize and start test containers
         PostgreSQLSetup()
         MongoDBSetup()
+        RedisSetup()
     }
 }

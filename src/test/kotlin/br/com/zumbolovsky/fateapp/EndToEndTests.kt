@@ -47,7 +47,7 @@ abstract class EndToEndTests {
     protected fun test(token: String): ResponseEntity<Any> =
         testRestTemplate.exchange(
             UriComponentsBuilder
-                .fromHttpUrl(createEndpointUrl("/mongo/test"))
+                .fromHttpUrl(createEndpointUrl("/secured/mongo/test"))
                 .build().toUri(),
             HttpMethod.POST,
             HttpEntity<Any>(createAuthorizationHeader(token)),

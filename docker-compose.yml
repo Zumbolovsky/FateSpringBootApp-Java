@@ -11,7 +11,7 @@ services:
       - '5432:5432'
 
   fsba-pgadmin:
-    container_name: pgadmin
+    container_name: fsba-pgadmin
     image: 'dpage/pgadmin4:latest'
     environment:
       PGADMIN_DEFAULT_EMAIL: test@test.com
@@ -33,7 +33,7 @@ services:
       - "27017:27017"
 
   fsba-redis:
-    container_name: redis
+    container_name: fsba-redis
     image: 'bitnami/redis:latest'
     hostname: "redishostname"
     environment:
