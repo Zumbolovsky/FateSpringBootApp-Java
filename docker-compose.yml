@@ -51,12 +51,14 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
-      - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodbhostname:27017
+      - SPRING_REDIS_HOST=redishostname
     volumes:
       - ./:/app
     depends_on:
       - fsba-postgresql
       - fsba-mongodb
+      - fsba-redis
     command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
 
   fate-spring-boot-app_deploy:
@@ -68,8 +70,10 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
-      - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodbhostname:27017
+      - SPRING_REDIS_HOST=redishostname
     depends_on:
       - fsba-postgresql
       - fsba-mongodb
+      - fsba-redis
     command: java -jar fate-app-0.0.1-SNAPSHOT.jar -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"

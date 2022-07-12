@@ -25,9 +25,10 @@ To run the application, simply access the directory that contains the `docker-co
 preferred command terminal application and execute the following commands:
 
 ```shell
-docker-compose up postgresql
-docker-compose up mongodb
-docker-compose up fate-spring-boot-app
+docker-compose up fsba-redis
+docker-compose up fsba-postgresql
+docker-compose up fsba-mongodb
+docker-compose up fate-spring-boot-app_deploy
 ```
 
 These commands will create and run the dependant services along with the actual project application.
@@ -35,8 +36,11 @@ These commands will create and run the dependant services along with the actual 
 In addition, for ease of use, another service is present in the `docker-compose.yml` file: 
 a pgadmin service, used for database navigation. 
 
-Note that, for database navigation, you will need to connect to the postgresql server
-specified using either the docker container IP in the network created, or the declared **testname** hostname.
+_No additional client service was provided for the Redis and MongoDB server services._
+
+Note that, for database navigation, you will need to connect to the server
+specified using either the docker container IP in the network created, 
+or the declared hostname (**postgresqlhostname** for PostgreSQL and **mongodbhostname** for MongoDB).
 
 Also, all credentials needed to access the pgadmin console and postgresql server declared in the pgadmin navigation UI are exposed 
 in the same `docker-compose.yml` file.
