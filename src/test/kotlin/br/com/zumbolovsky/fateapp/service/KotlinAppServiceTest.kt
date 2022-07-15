@@ -1,9 +1,5 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
-import br.com.zumbolovsky.fateapp.service.KotlinAppService
-import br.com.zumbolovsky.fateapp.service.KotlinOtherService
-import br.com.zumbolovsky.fateapp.service.TestEnum
-import br.com.zumbolovsky.fateapp.service.TestProcessorService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

@@ -21,15 +21,15 @@ class UserService(private val userInfoRepository: UserInfoRepository): UserDetai
         findByExample(UserInfo(user = username, password = MD5Util.computeMD5(password)))
 
     @Cacheable("user")
-    private fun findByExample(probe: UserInfo) =
+    protected fun findByExample(probe: UserInfo): User =
         userInfoRepository.findOne(Example.of(probe))
             .orElseThrow { EntityNotFoundException("User info does not exist!") }
             .let { User(it.user, it.password, emptyList()) }
 
-    fun signUp(userInfo: UserInfo) {
-        userInfo.password = MD5Util.computeMD5(userInfo.password)
-        userInfoRepository.findOne(Example.of(userInfo))
+    fun signUp(userInfo: UserInfo): Unit =
+        userInfoRepository.findOne(
+            Example.of(
+                userInfo.apply { this.password = MD5Util.computeMD5(this.password) }))
             .ifPresent { throw EntityExistsException("User ${it.user} already signed in!") }
             .apply { userInfoRepository.save(userInfo) }
-    }
 }

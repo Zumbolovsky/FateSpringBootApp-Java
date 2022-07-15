@@ -1,7 +1,5 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.web.AuthRequest
-import br.com.zumbolovsky.fateapp.web.UserVO
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
@@ -9,7 +7,7 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import kotlin.test.assertNotNull
 
-class SecuredTestControllerTest: EndToEndTests() {
+class SecuredTestControllerTest: EndToEndAutoConfiguration() {
 
     @ParameterizedTest
     @CsvSource("user, test")

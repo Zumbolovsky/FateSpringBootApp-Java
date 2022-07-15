@@ -15,6 +15,7 @@ In this repo, there are the following branches and their use:
 - `/feature/oauth2`: for example of authentication in REST API using OAuth2;
 - `/feature/testcontainers-and-it`: for example of integration tests and TestContainers configuration;
 - `/feature/redis`: for example of Redis cache and database functionality and configuration;
+- `/feature/spock`: for example of Spock Framework testing;
 
 The FateSpringBootApp is a Maven project created with Spring Boot as a starting framework.
 

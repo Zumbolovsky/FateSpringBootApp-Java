@@ -1,7 +1,6 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.web
 
-import br.com.zumbolovsky.fateapp.web.AuthRequest
-import br.com.zumbolovsky.fateapp.web.UserVO
+import br.com.zumbolovsky.fateapp.ContainersInitializer
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
@@ -16,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = [ContainersInitializer::class])
-abstract class EndToEndTests {
+abstract class EndToEndAutoConfiguration {
 
     @Autowired
     private lateinit var testRestTemplate: TestRestTemplate

@@ -43,7 +43,7 @@ class FateAppApplication {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            runApplication<FateAppApplication>(*args)
+            runApplication<br.com.zumbolovsky.fateapp.FateAppApplication>(*args)
         }
     }
 }
