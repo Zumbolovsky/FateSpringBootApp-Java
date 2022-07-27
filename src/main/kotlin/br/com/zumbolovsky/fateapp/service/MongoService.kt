@@ -18,7 +18,12 @@ class MongoService {
 
     fun createMC(): MainCharacter {
         val mcCollection = mongoDB.getCollection<MainCharacter>()
-        val mainCharacter = MainCharacter("test", random().toInt().toShort(), random().toLong(), random().toBigDecimal().toBigInteger())
+        val mainCharacter =
+            MainCharacter(
+                name = "test",
+                level = random().toInt().toShort(),
+                saintQuartz = random().toLong(),
+                qp = random().toBigDecimal().toBigInteger())
         if (mcCollection.countDocuments() == 1L) {
             logger.info("Replacing existing main character...")
             mcCollection.deleteMany(MainCharacter::name exists true)

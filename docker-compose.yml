@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  postgresql:
-    container_name: postgresql
+  fsba-postgresql:
+    container_name: fsba-postgresql
     image: 'bitnami/postgresql:latest'
     hostname: "postgresqlhostname"
     environment:
@@ -10,8 +10,8 @@ services:
     ports:
       - '5432:5432'
 
-  pgadmin:
-    container_name: pgadmin
+  fsba-pgadmin:
+    container_name: fsba-pgadmin
     image: 'dpage/pgadmin4:latest'
     environment:
       PGADMIN_DEFAULT_EMAIL: test@test.com
@@ -19,8 +19,8 @@ services:
     ports:
       - '5050:80'
 
-  mongodb:
-    container_name: mongodb
+  fsba-mongodb:
+    container_name: fsba-mongodb
     image: 'bitnami/mongodb:latest'
     hostname: "mongodbhostname"
     environment:
@@ -32,6 +32,15 @@ services:
     ports:
       - "27017:27017"
 
+  fsba-redis:
+    container_name: fsba-redis
+    image: 'bitnami/redis:latest'
+    hostname: "redishostname"
+    environment:
+      ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "6379:6379"
+
   fate-spring-boot-app_develop:
     container_name: fate-spring-boot-app_develop
     build:
@@ -42,12 +51,14 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
-      - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodbhostname:27017
+      - SPRING_REDIS_HOST=redishostname
     volumes:
       - ./:/app
     depends_on:
-      - postgresql
-      - mongodb
+      - fsba-postgresql
+      - fsba-mongodb
+      - fsba-redis
     command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
 
   fate-spring-boot-app_deploy:
@@ -59,8 +70,10 @@ services:
       - "8080:8080"
     environment:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresqlhostname:5432/postgres
-      - MONGODB_CONNECTION=mongodb://root:root@mongodbhostname:27017
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodbhostname:27017
+      - SPRING_REDIS_HOST=redishostname
     depends_on:
-      - postgresql
-      - mongodb
+      - fsba-postgresql
+      - fsba-mongodb
+      - fsba-redis
     command: java -jar fate-app-0.0.1-SNAPSHOT.jar -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"

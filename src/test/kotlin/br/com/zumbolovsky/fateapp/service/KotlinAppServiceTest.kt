@@ -1,19 +1,20 @@
-package br.com.zumbolovsky.fateapp
+package br.com.zumbolovsky.fateapp.service
 
-import br.com.zumbolovsky.fateapp.service.KotlinAppService
-import br.com.zumbolovsky.fateapp.service.KotlinOtherService
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.kotlin.doReturn
+import org.springframework.plugin.core.PluginRegistry
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
 internal class KotlinAppServiceTest {
 
     @Mock private lateinit var kotlinOtherService: KotlinOtherService
+
+    @Mock private lateinit var testProcessorPluginRegistry: PluginRegistry<TestProcessorService, TestEnum>
 
     @InjectMocks private lateinit var kotlinAppService: KotlinAppService
 

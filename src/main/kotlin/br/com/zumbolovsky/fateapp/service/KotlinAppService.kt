@@ -1,13 +1,13 @@
 package br.com.zumbolovsky.fateapp.service
 
-import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.plugin.core.PluginRegistry
 import org.springframework.stereotype.Service
-import kotlin.RuntimeException
 
 @Service
 class KotlinAppService(
-    @Autowired var kotlinOtherService: KotlinOtherService/*,
-    @Autowired var testProcessorPluginRegistry: PluginRegistry<TestProcessorService, TestEnum>*/) {
+    private val kotlinOtherService: KotlinOtherService,
+    private val testProcessorPluginRegistry: PluginRegistry<TestProcessorService, TestEnum>
+) {
 
     fun calculateAll(valores: Array<Int>?): Int {
         if (valores.isNullOrEmpty()) {
@@ -22,9 +22,9 @@ class KotlinAppService(
         return sumOf
     }
 
-    /*fun testPluginRegistry() {
-        val testProcessorService = testProcessorPluginRegistry.getPluginFor(TestEnum.TEST_A)
-            .orElseThrow { RuntimeException("Implementação não encontrada") }
-        println(testProcessorService.process())
-    }*/
+    fun testPluginRegistry(): String =
+        testProcessorPluginRegistry.getPluginFor(TestEnum.TEST_C)
+            .orElseThrow { ImplementationNotFoundException(listOf(TestProcessorService::class.simpleName!!, TestEnum.TEST_C.name)) }
+            .process()
+            .also { println(it) }
 }

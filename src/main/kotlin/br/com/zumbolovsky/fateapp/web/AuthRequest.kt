@@ -6,5 +6,4 @@ data class AuthRequest(
     @field:NotNull(message = "{user.name} {not.null}")
     val user: String,
     @field:NotNull(message = "{user.password} {not.null}")
-    val password: String
-)
+    val password: String)
