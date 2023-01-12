@@ -24,7 +24,10 @@ class KotlinAppService(
 
     fun testPluginRegistry(): String =
         testProcessorPluginRegistry.getPluginFor(TestEnum.TEST_C)
-            .orElseThrow { ImplementationNotFoundException(listOf(TestProcessorService::class.simpleName!!, TestEnum.TEST_C.name)) }
+            .orElseThrow {
+                ImplementationNotFoundException(
+                    debugArgs = listOf(TestProcessorService::class.simpleName!!, TestEnum.TEST_C.name))
+            }
             .process()
             .also { println(it) }
 }

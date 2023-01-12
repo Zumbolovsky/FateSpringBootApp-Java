@@ -1,14 +1,15 @@
 package br.com.zumbolovsky.fateapp.domain.postgres
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.Table
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinColumn
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
+import jakarta.persistence.Table
 
 @Entity
 @Table(name = "USER_INFO")
@@ -27,9 +28,10 @@ data class UserInfo(
     @Column(name = "PASSWORD", nullable = false)
     var password: String? = null,
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "USERS_ROLES",
+        name = "USER_ROLES",
         joinColumns = [JoinColumn(name = "USER_ID", referencedColumnName = "ID")],
         inverseJoinColumns = [JoinColumn(name = "ROLE_ID", referencedColumnName = "ID")])
-    var roles: Collection<Role>)
+    var roles: Collection<Role>? = emptyList()
+)

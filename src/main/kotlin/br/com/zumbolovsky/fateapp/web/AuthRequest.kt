@@ -1,6 +1,7 @@
 package br.com.zumbolovsky.fateapp.web
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
+
 
 data class AuthRequest(
     @field:NotNull(message = "{user.name} {not.null}")
