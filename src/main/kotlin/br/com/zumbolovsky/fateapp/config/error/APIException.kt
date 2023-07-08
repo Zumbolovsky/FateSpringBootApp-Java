@@ -1,11 +1,12 @@
 package br.com.zumbolovsky.fateapp.config.error
 
 import org.springframework.http.HttpStatus
+import java.io.Serializable
 
 abstract class APIException(
     args: List<String>? = null,
     debugArgs: List<String>? = null
-) : RuntimeException() {
+) : RuntimeException(), Serializable {
     internal val messages = arrayListOf<String>()
     internal val additionalInfo = hashMapOf<String, Any>()
     internal val debugArgs = arrayListOf<Any>()

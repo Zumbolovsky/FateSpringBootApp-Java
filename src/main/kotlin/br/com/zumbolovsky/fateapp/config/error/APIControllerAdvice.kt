@@ -1,6 +1,7 @@
 package br.com.zumbolovsky.fateapp.config.error
 
 import br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ARGUMENT_NOT_VALID
+import br.com.zumbolovsky.fateapp.config.error.ErrorMessages.BAD_CREDENTIALS
 import br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ENTITY_EXISTS_DEFAULT
 import br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ENTITY_NOT_FOUND_DEFAULT
 import br.com.zumbolovsky.fateapp.config.error.ErrorMessages.MESSAGE_NOT_READABLE
@@ -15,6 +16,7 @@ import org.springframework.core.annotation.Order
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
+import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
@@ -68,6 +70,15 @@ class APIControllerAdvice(
             HttpStatus.BAD_REQUEST)
 
     @ResponseBody
+    @ExceptionHandler(AccessDeniedException::class)
+    fun handleAccessDenied(e: AccessDeniedException): ResponseEntity<APIResponse<Any>> =
+        ResponseEntity(
+            APIResponse(
+                message = accessor.getMessage(UNAUTHORIZED),
+                debugMessage = e.localizedMessage),
+            HttpStatus.UNAUTHORIZED)
+
+    @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleMethodArgumentNotValid(e: MethodArgumentNotValidException): ResponseEntity<APIResponse<Any>> =
         ResponseEntity(
@@ -81,7 +92,7 @@ class APIControllerAdvice(
     fun handleBadCredentials(e: BadCredentialsException): ResponseEntity<APIResponse<Any>> =
         ResponseEntity(
             APIResponse(
-                message = accessor.getMessage(UNAUTHORIZED),
+                message = accessor.getMessage(BAD_CREDENTIALS),
                 debugMessage = e.localizedMessage),
             HttpStatus.UNAUTHORIZED)
 
