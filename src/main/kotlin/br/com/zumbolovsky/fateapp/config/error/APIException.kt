@@ -1,10 +1,21 @@
 package br.com.zumbolovsky.fateapp.config.error
 
 import org.springframework.http.HttpStatus
+import java.io.Serializable
 
-abstract class APIException : RuntimeException {
+abstract class APIException(
+    args: List<String>? = null,
+    debugArgs: List<String>? = null
+) : RuntimeException(), Serializable {
     internal val messages = arrayListOf<String>()
     internal val additionalInfo = hashMapOf<String, Any>()
+    internal val debugArgs = arrayListOf<Any>()
+    internal val args = arrayListOf<Any>()
+
+    init {
+        args?.let { addArguments(it) }
+        debugArgs?.let { addDebugArguments(it) }
+    }
 
     val debugMessage: String?
         get() {
@@ -15,8 +26,6 @@ abstract class APIException : RuntimeException {
                 null
         }
 
-    internal val debugArgs = arrayListOf<Any>()
-
     override val message: String?
         get() {
             val klass: Class<out APIException> = this.javaClass
@@ -25,8 +34,6 @@ abstract class APIException : RuntimeException {
             else
                 null
         }
-
-    internal val args = arrayListOf<Any>()
 
     internal val status: HttpStatus
         get() {
@@ -37,33 +44,12 @@ abstract class APIException : RuntimeException {
                 HttpStatus.BAD_REQUEST
         }
 
-    constructor() : super()
 
-    constructor(messages: List<String>) : super(if (messages.isNotEmpty()) messages[0] else null) {
-        this.messages.addAll(messages)
-    }
-
-    constructor(message: String) : super(message) {
-        messages.add(message)
-    }
-
-    constructor(message: String, cause: Throwable) : super(message, cause) {
-        messages.add(message)
-    }
-
-    fun addDebugArguments(value: Any) {
-        debugArgs.add(value)
-    }
-
-    fun addDebugArguments(values: List<Any>) {
+    private fun addDebugArguments(values: List<Any>) {
         debugArgs.addAll(values)
     }
 
-    fun addArgument(value: Any) {
-        args.add(value)
-    }
-
-    fun addArguments(values: List<Any>) {
+    private fun addArguments(values: List<Any>) {
         args.addAll(values)
     }
 

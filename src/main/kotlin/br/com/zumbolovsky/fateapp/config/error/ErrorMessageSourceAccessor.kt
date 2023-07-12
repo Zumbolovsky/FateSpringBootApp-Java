@@ -14,12 +14,9 @@ class ErrorMessageSourceAccessor(
             emptyArray()
         else args.stream()
             .map { arg: Any ->
-                if (arg is String)
-                    messageSourceAccessor.getMessage(arg.toString(), arg.toString())
-                else
-                    arg
-        }
-        .toArray()
+                if (arg is String) messageSourceAccessor.getMessage(arg.toString(), arg.toString())
+                else arg
+            }.toArray()
 
     fun getMessage(code: String): String {
         return messageSourceAccessor.getMessage(code)

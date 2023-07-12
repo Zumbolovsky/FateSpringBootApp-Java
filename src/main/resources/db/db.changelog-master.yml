@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/1.0.0__Create_User_Info.sql
+  - include:
+      file: db/changelog/1.0.1__Create_And_Insert_Authorization.sql

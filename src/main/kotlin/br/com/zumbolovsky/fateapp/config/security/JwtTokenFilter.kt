@@ -1,57 +1,65 @@
 package br.com.zumbolovsky.fateapp.config.security
 
 import br.com.zumbolovsky.fateapp.service.UserService
-import ch.qos.logback.core.util.OptionHelper.isEmpty
+import jakarta.servlet.FilterChain
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import org.apache.commons.lang3.ObjectUtils.isEmpty
 import org.springframework.http.HttpHeaders
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
-import javax.servlet.FilterChain
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtTokenFilter(private val userService : UserService) : OncePerRequestFilter() {
+class JwtTokenFilter(
+    private val userService : UserService,
+) : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,
         response: HttpServletResponse,
         filterChain: FilterChain
-    ) {
-
+    ) : Unit =
         request.getHeader(HttpHeaders.AUTHORIZATION)
-            .also { header ->
-                if (isEmpty(header) || !header.startsWith("Bearer ")) {
-                    filterChain.doFilter(request, response)
-                    return
-                }
+            ?.also { header -> attemptAuthenticationFromToken(header, request) }
+            .run { filterChain.doFilter(request, response) }
 
-                // Get jwt token and validate
-                header.split(" ").toTypedArray()[1].trim { it <= ' ' }
-                    .also { token ->
-                        if (!JwtToken.validate(token)) {
-                            filterChain.doFilter(request, response)
-                            return
-                        }
-
+    private fun attemptAuthenticationFromToken(
+        header: String,
+        request: HttpServletRequest,
+    ) {
+        if (!isEmpty(header) && header.startsWith("Bearer ")) {
+            // Get jwt token and validate
+            header.split(" ").lastOrNull()!!
+                .also { token ->
+                    if (JwtToken.validate(token)) {
                         // Get user identity and set it on the spring security context
-                        SecurityContextHolder.getContext().authentication =
-                            userService.loadUserByUsername(JwtToken.getUsername(token))
-                                .let { userDetails ->
-                                    UsernamePasswordAuthenticationToken(
-                                        userDetails,
-                                        null,
-                                        userDetails.authorities
-                                    ).also { authenticationToken ->
-                                        authenticationToken.details =
-                                            WebAuthenticationDetailsSource().buildDetails(request)
-                                    }
-                                }
+                        SecurityContextHolder.getContext().authentication = getAuthentication(request, token)
                     }
-            }
+                }
+        }
 
-        filterChain.doFilter(request, response)
     }
+    private fun getAuthentication(
+        request: HttpServletRequest,
+        token: String
+    ) : Authentication =
+        mapToUsernamePasswordAuthenticationToken(
+            userService.loadUserByUsername(JwtToken.getUsername(token)),
+            request
+        )
+
+    private fun mapToUsernamePasswordAuthenticationToken(
+        userDetails: UserDetails,
+        request: HttpServletRequest
+    ) : UsernamePasswordAuthenticationToken =
+        UsernamePasswordAuthenticationToken(userDetails, null, userDetails.authorities)
+            .also { authenticationToken ->
+                authenticationToken.details = WebAuthenticationDetailsSource()
+                    .buildDetails(request)
+            }
 }
