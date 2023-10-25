@@ -33,7 +33,9 @@ jobs:
           cache: maven
 
       - name: Maven Test
-        run: chmod +x mvnw
+        run: |
+          chmod +x mvnw
+          mkdir tmp/appmap
 
       - name: Install AppMap tools
         uses: getappmap/install-action@v1
