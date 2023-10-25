@@ -46,7 +46,24 @@ jobs:
       - name: Maven Test
         run: ./mvnw test
 
+      - name: Save AppMaps
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: ./tmp/appmap
+          key: appmaps-${{ github.sha }}-${{ github.run_attempt }}
+
       - name: Archive AppMaps
         uses: getappmap/archive-action@v1
         with:
           revision: ${{ github.event.pull_request.base.sha }}
+
+  appmap-analysis:
+    if: always()
+    needs: [ test ] # You may need to change this to match the name of the step that runs your tests.
+    uses: getappmap/analyze-action/.github/workflows/appmap-analysis.yml@v1
+    permissions:
+      actions: read
+      contents: read
+      checks: write
+      pull-requests: write
