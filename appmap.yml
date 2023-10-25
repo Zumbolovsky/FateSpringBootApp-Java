@@ -1,0 +1,5 @@
+name: FateSpringBootApp
+packages:
+  - path: br.com.zumbolovsky.fateapp
+language: java
+appmap_dir: tmp/appmap
