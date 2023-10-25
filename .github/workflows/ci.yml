@@ -44,7 +44,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
 
       - name: Maven Test
-        run: ./mvnw test
+        run: ./mvnw com.appland:appmap-maven-plugin:prepare-agent test
 
       - name: Save AppMaps
         uses: actions/cache/save@v3
