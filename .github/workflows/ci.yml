@@ -32,6 +32,9 @@ jobs:
           distribution: 'adopt'
           cache: maven
 
+      - name: Maven Test
+        run: chmod +x mvnw
+
       - name: Install AppMap tools
         uses: getappmap/install-action@v1
         with:
@@ -41,9 +44,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
 
       - name: Maven Test
-        run: |
-          chmod +x mvnw
-          ./mvnw test
+        run: ./mvnw test
 
       - name: Archive AppMaps
         uses: getappmap/archive-action@v1
