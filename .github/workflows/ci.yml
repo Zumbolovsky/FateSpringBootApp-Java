@@ -33,9 +33,7 @@ jobs:
           cache: maven
 
       - name: Maven Test
-        run: |
-          chmod +x mvnw
-          mkdir tmp/appmap
+        run: chmod +x mvnw
 
       - name: Install AppMap tools
         uses: getappmap/install-action@v1
@@ -54,11 +52,6 @@ jobs:
         with:
           path: ./tmp/appmap
           key: appmaps-${{ github.sha }}-${{ github.run_attempt }}
-
-      - name: Archive AppMaps
-        uses: getappmap/archive-action@v1
-        with:
-          revision: ${{ github.event.pull_request.base.sha }}
 
   appmap-analysis:
     if: always()
