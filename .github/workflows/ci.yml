@@ -1,10 +1,11 @@
-name: CI
+name: CI (AppMap)
 
 on:
   pull_request:
   push:
     branches:
       - main
+      - feature/complete-java
 
 jobs:
   test:
@@ -23,4 +24,26 @@ jobs:
           cache: maven
 
       - name: Maven Test
-        run: ./mvnw test
+        run: |
+          chmod +x mvnw
+          mkdir -p tmp/appmap
+
+      - name: Maven Test
+        run: ./mvnw com.appland:appmap-maven-plugin:prepare-agent test
+
+      - name: Save AppMaps
+        uses: actions/cache/save@v3
+        if: always()
+        with:
+          path: ./tmp/appmap
+          key: appmaps-${{ github.sha }}-${{ github.run_attempt }}
+
+  appmap-analysis:
+    if: always()
+    needs: [ test ] # You may need to change this to match the name of the step that runs your tests.
+    uses: getappmap/analyze-action/.github/workflows/appmap-analysis.yml@v1
+    permissions:
+      actions: read
+      contents: read
+      checks: write
+      pull-requests: write
