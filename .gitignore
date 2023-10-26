@@ -31,10 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-
-# AppMap artifacts
-/.appmap
-
-# Node modules
-/node_modules
