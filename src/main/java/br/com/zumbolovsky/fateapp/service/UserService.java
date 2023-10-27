@@ -36,7 +36,6 @@ public class UserService implements UserDetailsService {
         return userInfoRepository.findAllByRole(role);
     }
 
-
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) {

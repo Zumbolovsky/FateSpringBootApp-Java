@@ -1,6 +1,7 @@
 package br.com.zumbolovsky.fateapp.web;
 
 import br.com.zumbolovsky.fateapp.ContainersInitializer;
+import br.com.zumbolovsky.fateapp.service.TestEnum;
 import org.assertj.core.util.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +31,7 @@ abstract class EndToEndAutoConfiguration {
     protected ResponseEntity<Object> signUp(UserVO userVO, String role, String token) {
         return testRestTemplate.exchange(
                 UriComponentsBuilder
-                        .fromHttpUrl(createEndpointUrl("/users/" + role))
+                        .fromHttpUrl(createEndpointUrl("/users/%s".formatted(role)))
                         .build().toUri(),
                 HttpMethod.POST,
                 new HttpEntity<>(userVO, createAuthorizationHeader(token)),
@@ -49,6 +50,15 @@ abstract class EndToEndAutoConfiguration {
         );
     }
 
+    protected ResponseEntity<String> testPluginProcessor(TestEnum testEnum) {
+        return testRestTemplate.getForEntity(
+                UriComponentsBuilder
+                        .fromHttpUrl(createEndpointUrl("/plugin/test/%s".formatted(testEnum.name())))
+                        .build().toUri(),
+                String.class
+        );
+    }
+
     protected ResponseEntity<Object> test(String token) {
         return testRestTemplate.exchange(
                 UriComponentsBuilder
@@ -61,10 +71,10 @@ abstract class EndToEndAutoConfiguration {
     }
 
     private String createEndpointUrl(String endpoint) {
-        return "http://localhost:" + localPort + "/fate" + endpoint;
+        return "http://localhost:%d/fate%s".formatted(localPort, endpoint);
     }
 
     private MultiValueMap<String, String> createAuthorizationHeader(String token) {
-        return new MultiValueMapAdapter<>(Maps.newHashMap(HttpHeaders.AUTHORIZATION, List.of("Bearer " + token)));
+        return new MultiValueMapAdapter<>(Maps.newHashMap(HttpHeaders.AUTHORIZATION, List.of("Bearer %s".formatted(token))));
     }
 }

@@ -1,8 +1,7 @@
 package br.com.zumbolovsky.fateapp.config.error;
 
-import br.com.zumbolovsky.fateapp.service.EntityExistsException;
-import br.com.zumbolovsky.fateapp.service.EntityNotFoundException;
-import br.com.zumbolovsky.fateapp.service.ImplementationNotFoundException;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
@@ -26,7 +25,6 @@ import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ARGUMENT_NOT
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.BAD_CREDENTIALS;
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ENTITY_EXISTS_DEFAULT;
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.ENTITY_NOT_FOUND_DEFAULT;
-import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.IMPLEMENTATION_NOT_FOUND;
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.MESSAGE_NOT_READABLE;
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.UNAUTHORIZED;
 import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.UNKNOWN;
@@ -135,16 +133,6 @@ public class APIControllerAdvice {
                         accessor.getMessage(ENTITY_EXISTS_DEFAULT),
                         e.getLocalizedMessage()),
                 HttpStatus.CONFLICT);
-    }
-
-    @ResponseBody
-    @ExceptionHandler(ImplementationNotFoundException.class)
-    public ResponseEntity<APIResponse<Object>> handleImplementationNotFound(ImplementationNotFoundException e) {
-        return new ResponseEntity<>(
-                new APIResponse<>(
-                        accessor.getMessage(IMPLEMENTATION_NOT_FOUND),
-                        e.getLocalizedMessage()),
-                HttpStatus.NOT_FOUND);
     }
 
     @ResponseBody

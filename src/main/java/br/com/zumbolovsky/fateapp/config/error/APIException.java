@@ -23,7 +23,7 @@ public abstract class APIException extends RuntimeException implements Serializa
         } else {
             addArguments(args);
         }
-        if (args == null) {
+        if (debugArgs == null) {
             this.debugArgs = null;
         } else {
             addDebugArguments(debugArgs);

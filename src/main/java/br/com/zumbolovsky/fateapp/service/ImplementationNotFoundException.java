@@ -14,7 +14,7 @@ import static br.com.zumbolovsky.fateapp.config.error.ErrorMessages.INTERNAL_ERR
 @ErrorCode(
         debugMessage = IMPLEMENTATION_NOT_FOUND,
         message = INTERNAL_ERROR)
-@ErrorStatus(HttpStatus.BAD_REQUEST)
+@ErrorStatus(HttpStatus.NOT_FOUND)
 public class ImplementationNotFoundException extends APIException {
 
     @Serial
